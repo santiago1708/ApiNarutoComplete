@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { Character } from "../types";
-import {devtools} from 'zustand/middleware'
+import { devtools } from 'zustand/middleware'
 import { getCharacterbyIDFunction, getCharactersFuntion } from "../services/narutoServices";
 
 type CharacterState = {
@@ -24,7 +24,7 @@ export const useCharacterStore = create<CharacterState>()(devtools(((set, get) =
     filteredCharacters: [],
     result: {} as Character,
     loading: false,
-    axiosCharacter: async() => {
+    axiosCharacter: async () => {
         set(() => ({ loading: true }))
         const response = await getCharactersFuntion()
         set(() => ({
@@ -32,14 +32,16 @@ export const useCharacterStore = create<CharacterState>()(devtools(((set, get) =
             loading: false
         }))
     },
-    axiosCharacterbyId : async(id : number) => {
+    axiosCharacterbyId: async (id: number) => {
         set(() => ({ loading: true }))
         const response = await getCharacterbyIDFunction(id)
         set(() => ({
             result: response,
             loading: false
         }))
-        localStorage.setItem('result', JSON.stringify(get().result))
+        if (typeof window !== "undefined") {
+            localStorage.setItem('result', JSON.stringify(response));
+        }
     },
     searchCharacterbyName: (name) => {
         set((state) => ({
@@ -47,32 +49,37 @@ export const useCharacterStore = create<CharacterState>()(devtools(((set, get) =
         }))
     },
     addfavoriteCharacter: (character) => {
-        if(get().favoriteExist(character.id)){
-            set((state)=> ({
+        if (get().favoriteExist(character.id)) {
+            set((state) => ({
                 favorites: state.favorites.filter(e => e.id !== character.id)
             }))
-        }else {
-            set((state)=> ({
+        } else {
+            set((state) => ({
                 favorites: [...state.favorites, character]
             }))
         }
-        localStorage.setItem('favorites', JSON.stringify(get().favorites))
+        if (typeof window !== "undefined") {
+            localStorage.setItem('favorites', JSON.stringify(get().favorites));
+        }
     },
     favoriteExist: (id) => {
         return get().favorites.some(favorite => favorite.id === id)
-    }, 
+    },
     loadFromStorage: () => {
-        const storadFavorites = localStorage.getItem('favorites')
-        const storadResult = localStorage.getItem('result')
-        if(storadFavorites) {
-            set({
-                favorites: JSON.parse(storadFavorites)
-            })
-        }
-        if(storadResult) {
-            set({
-                result: JSON.parse(storadResult)
-            })
+        if (typeof window !== "undefined") {
+
+            const storadFavorites = localStorage.getItem('favorites')
+            const storadResult = localStorage.getItem('result')
+            if (storadFavorites) {
+                set({
+                    favorites: JSON.parse(storadFavorites)
+                })
+            }
+            if (storadResult) {
+                set({
+                    result: JSON.parse(storadResult)
+                })
+            }
         }
     }
 }))))
