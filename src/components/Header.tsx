@@ -17,7 +17,7 @@ export default function Header() {
             <div className=" p-6 m-auto flex flex-col space-y-5 lg:flex-row justify-center lg:justify-between items-center">
                 <Link to={'/'}>
                     <button className="border-none">
-                        <img className="w-auto h-28 rounded-lg" src="/public/logoNaruto2.jpg" alt="Logo Naruto" />
+                        <img className="w-auto h-28 rounded-lg" src="logoNaruto2.jpg" alt="Logo Naruto" />
                     </button>
                 </Link>
                 <div>
