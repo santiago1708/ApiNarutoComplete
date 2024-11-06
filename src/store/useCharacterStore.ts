@@ -67,7 +67,6 @@ export const useCharacterStore = create<CharacterState>()(devtools(((set, get) =
     },
     loadFromStorage: () => {
         if (typeof window !== "undefined") {
-
             const storadFavorites = localStorage.getItem('favorites')
             const storadResult = localStorage.getItem('result')
             if (storadFavorites) {

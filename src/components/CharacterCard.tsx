@@ -12,7 +12,7 @@ export default function CharacterCard({ character }: CharacterCardProps) {
     const favoriteExist = useCharacterStore(state => state.favoriteExist)
 
     return (
-        <div key={character.id} className=" bg-white rounded-lg  flex flex-col items-center shadow-2xl p-5 w-3/4 lg:w-3/5 m-auto">
+        <div key={character.id} className=" bg-white rounded-lg flex flex-col items-center shadow-2xl p-5 w-3/4 lg:w-3/5 m-auto">
             <div className="flex justify-center items-center space-x-3">
             {character.images && character.images.length > 0 ? (
                 character.images.map((image, index) => (
